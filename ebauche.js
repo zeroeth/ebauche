@@ -15,8 +15,20 @@ $(document).ready(function () {
   var geometry = new THREE.CylinderGeometry(20, 21, 4, 24, 1, false);
   var dial     = new THREE.Mesh(geometry, material);
 
-  var geometry = new THREE.CubeGeometry(40, 1, 3);
+  var geometry = new THREE.CubeGeometry(15, 1, 2);
+  geometry.applyMatrix( new THREE.Matrix4().translate( new THREE.Vector3(15, 0, 0)));
+  geometry.applyMatrix( new THREE.Matrix4().rotateX( 0.2 ));
   var second   = new THREE.Mesh(geometry, material);
+
+  var geometry = new THREE.CubeGeometry(10, 1, 3);
+  geometry.applyMatrix( new THREE.Matrix4().translate( new THREE.Vector3(15, 0, 0)));
+  geometry.applyMatrix( new THREE.Matrix4().rotateX( 0.2 ));
+  var minute   = new THREE.Mesh(geometry, material);
+
+  var geometry = new THREE.CubeGeometry(10, 1, 4);
+  geometry.applyMatrix( new THREE.Matrix4().translate( new THREE.Vector3(15, 0, 0)));
+  geometry.applyMatrix( new THREE.Matrix4().rotateX( 0.2 ));
+  var hour   = new THREE.Mesh(geometry, material);
 
   // Positions
   dial.position.x   = 0;
@@ -26,6 +38,14 @@ $(document).ready(function () {
   second.position.x = 0;
   second.position.y = 3;
   second.position.z = 0;
+
+  minute.position.x = 0;
+  minute.position.y = 4;
+  minute.position.z = 0;
+
+  hour.position.x = 0;
+  hour.position.y = 5;
+  hour.position.z = 0;
 
   light.position.x  = 10;
   light.position.y  = 50;
@@ -41,10 +61,26 @@ $(document).ready(function () {
   scene.add(light);
   scene.add(dial);
   scene.add(second);
+  scene.add(minute);
+  scene.add(hour);
 
 
   // Render
   $('#container').append(renderer.domElement);
   renderer.setSize(width, height);
   renderer.render(scene, camera);
+
+  var update = function() {
+    second.rotation.y += 0.01;
+    minute.rotation.y += 0.001;
+    hour.rotation.y   += 0.0005;
+  };
+
+  var animate = function() {
+    update();
+
+    renderer.render(scene, camera);
+    requestAnimationFrame( animate );
+  };
+  animate();
 });
