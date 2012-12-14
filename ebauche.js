@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Dimension Settings
-  var width = 400, height = 300;
+  var width = 1680, height = 1050;
   var angle = 45, aspect = width/height, near = 0.1, far = 10000;
 
 
@@ -9,8 +9,8 @@ $(document).ready(function () {
   var renderer = new THREE.WebGLRenderer();
   var camera   = new THREE.PerspectiveCamera(angle, aspect, near, far);
   var scene    = new THREE.Scene();
-  var light    = new THREE.PointLight(0xFFFFFF);
-  var material = new THREE.MeshNormalMaterial();
+  var light    = new THREE.SpotLight(0x00FFFF, 1);
+  var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
 
   var geometry = new THREE.CylinderGeometry(20, 21, 4, 24, 1, false);
   var dial     = new THREE.Mesh(geometry, material);
@@ -47,9 +47,10 @@ $(document).ready(function () {
   hour.position.y = 5;
   hour.position.z = 0;
 
-  light.position.x  = 10;
-  light.position.y  = 50;
-  light.position.z  = 130;
+  light.position.x  = 0;
+  light.position.y  = 100;
+  light.position.z  = 0;
+  light.lookAt(dial.position);
 
   camera.position.z = 40;
   camera.position.y = 40;
@@ -65,15 +66,35 @@ $(document).ready(function () {
   scene.add(hour);
 
 
+  // Shadow
+  renderer.shadowMapEnabled = true;
+
+  light.castShadow          = true;
+  light.shadowCameraNear    = 1.0;
+  light.shadowDarkness      = 0.5;
+
+  dial.castShadow    = true;
+  dial.receiveShadow = true;
+
+  second.castShadow    = true;
+  second.castShadow    = true;
+
+  minute.castShadow    = true;
+  minute.receiveShadow = true;
+
+  hour.castShadow      = true;
+  hour.receiveShadow   = true;
+
+
   // Render
   $('#container').append(renderer.domElement);
   renderer.setSize(width, height);
-  renderer.render(scene, camera);
 
   var update = function() {
     second.rotation.y += 0.01;
     minute.rotation.y += 0.001;
     hour.rotation.y   += 0.0005;
+    camera.rotation.z += 0.01;
   };
 
   var animate = function() {
