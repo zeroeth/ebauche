@@ -9,16 +9,17 @@ $(document).ready(function () {
   var renderer = new THREE.WebGLRenderer();
   var camera   = new THREE.PerspectiveCamera(angle, aspect, near, far);
   var scene    = new THREE.Scene();
-  var light    = new THREE.SpotLight(0x00FFFF, 1);
+  var light    = new THREE.SpotLight(0xFFFFFF, 1);
   var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
+  var red      = new THREE.MeshLambertMaterial({color: 0xFF0000});
 
-  var geometry = new THREE.CylinderGeometry(20, 21, 4, 24, 1, false);
+  var geometry = new THREE.CylinderGeometry(20, 21, 4, 48, 1, false);
   var dial     = new THREE.Mesh(geometry, material);
 
   var geometry = new THREE.CubeGeometry(15, 1, 2);
   geometry.applyMatrix( new THREE.Matrix4().translate( new THREE.Vector3(15, 0, 0)));
   geometry.applyMatrix( new THREE.Matrix4().rotateX( 0.2 ));
-  var second   = new THREE.Mesh(geometry, material);
+  var second   = new THREE.Mesh(geometry, red);
 
   var geometry = new THREE.CubeGeometry(10, 1, 3);
   geometry.applyMatrix( new THREE.Matrix4().translate( new THREE.Vector3(15, 0, 0)));
