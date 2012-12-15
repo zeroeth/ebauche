@@ -78,7 +78,7 @@ $(document).ready(function () {
   dial.receiveShadow = true;
 
   second.castShadow    = true;
-  second.castShadow    = true;
+  second.receiveShadow = true;
 
   minute.castShadow    = true;
   minute.receiveShadow = true;
