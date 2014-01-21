@@ -31,16 +31,16 @@ $(document).ready(function () {
 
   var geometry = new THREE.CubeGeometry(10, 1, 4);
   geometry.applyMatrix( new THREE.Matrix4().translate( new THREE.Vector3(15, 0, 0)));
-  var hour   = new THREE.Mesh(geometry, material);
+  var hour     = new THREE.Mesh(geometry, material);
 
   // Positions
   dial.position.x   = 0;
   dial.position.y   = -3;
   dial.position.z   = 0;
 
-  mark.position.x = 0;
-  mark.position.y = -1.5;
-  mark.position.z = 0;
+  mark.position.x   = 0;
+  mark.position.y   = -1.5;
+  mark.position.z   = 0;
 
   second.position.x = 0;
   second.position.y = 0;
@@ -50,9 +50,9 @@ $(document).ready(function () {
   minute.position.y = 1;
   minute.position.z = 0;
 
-  hour.position.x = 0;
-  hour.position.y = 2;
-  hour.position.z = 0;
+  hour.position.x   = 0;
+  hour.position.y   = 2;
+  hour.position.z   = 0;
 
   light.position.x  = 0;
   light.position.y  = 100;
@@ -98,19 +98,19 @@ $(document).ready(function () {
 
 
   // GUI
-  var gui = new dat.GUI();
-  gui.add(camera.position, 'x').min(-50).max(50).step(0.01);
-  gui.add(camera.position, 'y').min(-50).max(50).step(0.01);
-  gui.add(camera.position, 'z').min(-50).max(50).step(0.01);
+  //var gui = new dat.GUI();
+  //gui.add(camera.position, 'x').min(-50).max(50).step(0.01);
+  //gui.add(camera.position, 'y').min(-50).max(50).step(0.01);
+  //gui.add(camera.position, 'z').min(-50).max(50).step(0.01);
 
   // deal with resizes
 
 
   // Set initial time
   var now = new Date();
-  hour.rotation.y   = (Math.PI * 2) * (now.getHours()   / 12.0)
-  minute.rotation.y = (Math.PI * 2) * (now.getMinutes() / 60.0)
-  second.rotation.y = (Math.PI * 2) * (now.getSeconds() / 60.0)
+  hour.rotation.y   = -((Math.PI * 2) * (now.getHours()   / 12.0))
+  minute.rotation.y = -((Math.PI * 2) * (now.getMinutes() / 60.0))
+  second.rotation.y = -((Math.PI * 2) * (now.getSeconds() / 60.0))
   camera.rotation.z = second.rotation.y
 
   // Render
@@ -119,10 +119,11 @@ $(document).ready(function () {
 
   var update = function() {
     // delta here
-    second.rotation.y += 0.0018;
-    minute.rotation.y += 0.0018 / 60;
-    hour.rotation.y   += 0.0018 / 60 / 12;
-    camera.rotation.z += 0.0018;
+    second.rotation.y -= 0.0018;
+    minute.rotation.y -= 0.0018 / 60;
+    hour.rotation.y   -= 0.0018 / 60 / 12;
+    camera.rotation.z -= 0.0018;
+    //mark.rotation.y = (new Date().getTime())/1000
     // it would be cool to see the camera rotate at second speed smooth, while the hand 'ticks' quartz style
   };
 
